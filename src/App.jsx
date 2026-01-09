@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { ROUTES } from "./routes";
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { About } from "./pages/About";
@@ -67,35 +68,35 @@ export default function App() {
       <div className={`min-h-screen w-full font-sans flex flex-col transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
         <header className="bg-gradient-to-r from-slate-800 to-slate-900 shadow-lg">
           <div className="w-full mx-auto px-4 py-4 flex items-center">
-            <div className="w-full flex items-center">
+            <Link to={ROUTES.HOME} className="w-full flex items-center hover:opacity-90 transition-opacity">
               <img src={Logo} alt="logo" className="w-12 pt-1 " />
-              <h1 className="text-2xl font-bold text-white">MyNews</h1>
+              <h1 className="text-2xl font-bold text-white">TheWorldToday</h1>
               <span className="text-2xl text-white font-bold flex items-end">
                 .
               </span>
-            </div>
+            </Link>
             <div className="flex justify-end w-full">
               <nav className="space-x-6">
                 <Link
-                  to="/"
+                  to={ROUTES.HOME}
                   className="text-white hover:text-yellow-300 font-medium transition-colors"
                 >
                   Home
                 </Link>
                 <Link
-                  to="/categories"
+                  to={ROUTES.CATEGORIES}
                   className="text-white hover:text-yellow-300 font-medium transition-colors"
                 >
                   Categories
                 </Link>
                 <Link
-                  to="/saved"
+                  to={ROUTES.SAVED}
                   className="text-white hover:text-yellow-300 font-medium transition-colors"
                 >
                   Saved
                 </Link>
                 <Link
-                  to="/about"
+                  to={ROUTES.ABOUT}
                   className="text-white hover:text-yellow-300 font-medium transition-colors"
                 >
                   About
@@ -107,16 +108,16 @@ export default function App() {
 
         <main className="w-full mx-auto px-4 py-8 flex-grow">
           <Routes>
-            <Route path="/" element={<Home posts={posts} loading={loading} error={error} darkMode={darkMode} />} />
-            <Route path="/categories" element={<Categories darkMode={darkMode} />} />
-            <Route path="/saved" element={<Saved darkMode={darkMode} />} />
-            <Route path="/post/:id" element={<Post posts={posts} darkMode={darkMode} />} />
-            <Route path="/about" element={<About darkMode={darkMode} />} />
+            <Route path={ROUTES.HOME} element={<Home posts={posts} loading={loading} error={error} darkMode={darkMode} />} />
+            <Route path={ROUTES.CATEGORIES} element={<Categories darkMode={darkMode} />} />
+            <Route path={ROUTES.SAVED} element={<Saved darkMode={darkMode} />} />
+            <Route path={ROUTES.POST} element={<Post posts={posts} darkMode={darkMode} />} />
+            <Route path={ROUTES.ABOUT} element={<About darkMode={darkMode} />} />
           </Routes>
         </main>
 
         <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-6 text-center text-sm">
-          <p>&copy; 2026 MyNews. Built with React & Tailwind CSS.</p>
+          <p>&copy; 2026 TheWorldToday. Built with React & Tailwind CSS.</p>
         </footer>
 
         {/* Floating Dark Mode Toggle */}

@@ -25,7 +25,9 @@ body {
     #0b1220;
 }
 
-
+button{
+  cursor: pointer;
+}
 
 /* body {
   margin: 0;

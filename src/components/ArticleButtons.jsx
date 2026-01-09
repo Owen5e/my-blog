@@ -31,8 +31,8 @@ export function ArticleButtons({ article, darkMode, showSave = true, showShare =
         to={`/post/${article.id}`}
         className={`inline-block px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 transform hover:scale-105 shadow-md ${
           darkMode
-            ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-blue-500/25 hover:shadow-blue-500/40'
-            : 'bg-blue-400 hover:bg-blue-500 text-white shadow-blue-400/25 hover:shadow-blue-400/40'
+            ? 'bg-blue-500 hover:bg-blue-600 text-white hover:shadow-blue-500/40'
+            : 'bg-blue-400 hover:bg-blue-500 text-white hover:shadow-blue-400/40'
         }`}
       >
         Read
@@ -40,10 +40,10 @@ export function ArticleButtons({ article, darkMode, showSave = true, showShare =
       {showSave && (
         <button
           onClick={handleBookmark}
-          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 transform hover:scale-105 shadow-md ${
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 transform hover:scale-105 shadow-md cursor-pointer ${
             darkMode
-              ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-500/25 hover:shadow-emerald-500/40'
-              : 'bg-emerald-400 hover:bg-emerald-500 text-white shadow-emerald-400/25 hover:shadow-emerald-400/40'
+              ? 'bg-emerald-500 hover:bg-emerald-600 text-white hover:shadow-emerald-500/40'
+              : 'bg-emerald-400 hover:bg-emerald-500 text-white hover:shadow-emerald-400/40'
           }`}
         >
           Save

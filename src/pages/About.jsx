@@ -2,10 +2,10 @@ export function About({ darkMode }) {
   return (
     <div className="max-w-4xl mx-auto">
       <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-8 rounded-xl shadow-lg`}>
-        <h1 className={`text-4xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-blue-700'}`}>About MyNews</h1>
+        <h1 className={`text-4xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-blue-700'}`}>About TheWorldToday</h1>
         <div className={`space-y-4 leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           <p>
-            Welcome to MyNews, a modern and elegant news aggregation platform built with cutting-edge web technologies.
+            Welcome to TheWorldToday, a modern and elegant news aggregation platform built with cutting-edge web technologies.
             This project demonstrates the power of React combined with Tailwind CSS to create responsive,
             beautiful, and user-friendly news applications that fetch real-time news from external APIs.
           </p>

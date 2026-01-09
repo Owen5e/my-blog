@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ArticleButtons } from "../components/ArticleButtons";
+import { getPostRoute } from "../routes";
 
 export function Home({ posts, loading, error, darkMode }) {
   const [search, setSearch] = useState("");
@@ -233,7 +234,7 @@ export function Home({ posts, loading, error, darkMode }) {
               />
             )}
             <Link
-              to={`/post/${post.id}`}
+              to={getPostRoute(post.id)}
               className={`block text-xl font-semibold hover:underline mb-3 ${
                 darkMode ? 'text-orange-400 hover:text-orange-300' : 'text-blue-600 hover:text-blue-700'
               }`}

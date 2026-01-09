@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArticleButtons } from "../components/ArticleButtons";
+import { ROUTES } from "../routes";
 
 export function Saved({ darkMode }) {
   const [savedArticles, setSavedArticles] = useState([]);
@@ -39,7 +40,7 @@ export function Saved({ darkMode }) {
             Bookmark articles you want to read later by clicking the save button on any article.
           </p>
           <Link
-            to="/"
+            to={ROUTES.HOME}
             className={`inline-block px-6 py-3 rounded-lg font-medium transition-colors ${
               darkMode
                 ? 'bg-blue-600 hover:bg-blue-700 text-white'

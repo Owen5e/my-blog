@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { ROUTES } from "../routes";
 
 export function Post({ posts, darkMode }) {
   const { id } = useParams();
@@ -32,13 +33,13 @@ export function Post({ posts, darkMode }) {
     return (
       <div className="text-center text-red-500">
         <p className="text-lg mb-4">Article not found.</p>
-        <Link to="/" className={`hover:underline ${darkMode ? 'text-orange-400' : 'text-blue-600'}`}>Back to News</Link>
+        <Link to={ROUTES.HOME} className={`hover:underline ${darkMode ? 'text-orange-400' : 'text-blue-600'}`}>Back to News</Link>
       </div>
     );
 
   return (
     <div className="max-w-4xl mx-auto">
-      <Link to="/" className={`inline-block mb-4 hover:underline font-medium ${darkMode ? 'text-orange-400' : 'text-blue-600'}`}>
+      <Link to={ROUTES.HOME} className={`inline-block mb-4 hover:underline font-medium ${darkMode ? 'text-orange-400' : 'text-blue-600'}`}>
         ← Back to News
       </Link>
       <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-8 rounded-xl shadow-lg`}>
