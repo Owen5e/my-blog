@@ -26,7 +26,7 @@ export default function App() {
       try {
         const response = await fetch("/.netlify/functions/news");
         if (!response.ok) {
-          throw new Error("Failed to fetch news. Please check the function.");
+          throw new Error(`Failed to fetch news: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
         const apiPosts = data.articles.slice(0, 12).map((article, index) => ({
