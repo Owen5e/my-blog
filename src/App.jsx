@@ -1,12 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { ROUTES } from "./routes";
-import { Home } from "./pages/Home";
-import { Post } from "./pages/Post";
+import { useEffect, useState } from "react";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Logo from "./assets/logoblack.png";
 import { About } from "./pages/About";
 import { Categories } from "./pages/Categories";
+import { Home } from "./pages/Home";
+import { Post } from "./pages/Post";
 import { Saved } from "./pages/Saved";
-import { useState, useEffect } from "react";
-import Logo from "./assets/logoblack.png";
+import { ROUTES } from "./routes";
 
 const getStoredPosts = () => {
   const stored = localStorage.getItem("posts");
@@ -18,24 +18,25 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true';
+    return localStorage.getItem("darkMode") === "true";
   });
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const apiKey = import.meta.env.VITE_NEWS_API_KEY;
-        const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`);
-        if (!response.ok) throw new Error('Failed to fetch news. Please check your API key.');
+        const response = await fetch("/.netlify/functions/news");
+        if (!response.ok) {
+          throw new Error("Failed to fetch news. Please check the function.");
+        }
         const data = await response.json();
         const apiPosts = data.articles.slice(0, 12).map((article, index) => ({
           id: `api-${index}`,
           title: article.title,
-          content: article.description || 'No content available',
-          author: article.author || article.source.name || 'Unknown',
+          content: article.description || "No content available",
+          author: article.author || article.source.name || "Unknown",
           date: article.publishedAt,
           image: article.urlToImage,
-          url: article.url
+          url: article.url,
         }));
         const storedPosts = getStoredPosts();
         setPosts([...storedPosts, ...apiPosts]);
@@ -50,25 +51,31 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("posts", JSON.stringify(posts.filter(p => p.id >= 1000 || p.id < 100))); // Store only user-created posts (assuming API posts have ids < 100, user posts have Date.now() > 1000)
+    localStorage.setItem(
+      "posts",
+      JSON.stringify(posts.filter((p) => p.id >= 1000 || p.id < 100)),
+    ); // Store only user-created posts (assuming API posts have ids < 100, user posts have Date.now() > 1000)
   }, [posts]);
 
   useEffect(() => {
-    localStorage.setItem('darkMode', darkMode);
+    localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
-
-
   return (
     <Router>
-      <div className={`min-h-screen w-full font-sans flex flex-col transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+      <div
+        className={`min-h-screen w-full font-sans flex flex-col transition-colors duration-300 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"}`}
+      >
         <header className="bg-gradient-to-r from-slate-800 to-slate-900 shadow-lg">
           <div className="w-full mx-auto px-4 py-4 flex items-center">
-            <Link to={ROUTES.HOME} className="w-full flex items-center hover:opacity-90 transition-opacity">
+            <Link
+              to={ROUTES.HOME}
+              className="w-full flex items-center hover:opacity-90 transition-opacity"
+            >
               <img src={Logo} alt="logo" className="w-12 pt-1 " />
               <h1 className="text-2xl font-bold text-white">TheWorldToday</h1>
               <span className="text-2xl text-white font-bold flex items-end">
@@ -108,11 +115,33 @@ export default function App() {
 
         <main className="w-full mx-auto px-4 py-8 flex-grow">
           <Routes>
-            <Route path={ROUTES.HOME} element={<Home posts={posts} loading={loading} error={error} darkMode={darkMode} />} />
-            <Route path={ROUTES.CATEGORIES} element={<Categories darkMode={darkMode} />} />
-            <Route path={ROUTES.SAVED} element={<Saved darkMode={darkMode} />} />
-            <Route path={ROUTES.POST} element={<Post posts={posts} darkMode={darkMode} />} />
-            <Route path={ROUTES.ABOUT} element={<About darkMode={darkMode} />} />
+            <Route
+              path={ROUTES.HOME}
+              element={
+                <Home
+                  posts={posts}
+                  loading={loading}
+                  error={error}
+                  darkMode={darkMode}
+                />
+              }
+            />
+            <Route
+              path={ROUTES.CATEGORIES}
+              element={<Categories darkMode={darkMode} />}
+            />
+            <Route
+              path={ROUTES.SAVED}
+              element={<Saved darkMode={darkMode} />}
+            />
+            <Route
+              path={ROUTES.POST}
+              element={<Post posts={posts} darkMode={darkMode} />}
+            />
+            <Route
+              path={ROUTES.ABOUT}
+              element={<About darkMode={darkMode} />}
+            />
           </Routes>
         </main>
 
@@ -125,12 +154,12 @@ export default function App() {
           onClick={toggleDarkMode}
           className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 z-50 ${
             darkMode
-              ? 'bg-yellow-400 hover:bg-yellow-500 text-gray-900 shadow-yellow-400/30'
-              : 'bg-slate-800 hover:bg-slate-900 text-white shadow-slate-800/30'
+              ? "bg-yellow-400 hover:bg-yellow-500 text-gray-900 shadow-yellow-400/30"
+              : "bg-slate-800 hover:bg-slate-900 text-white shadow-slate-800/30"
           }`}
-          title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
         >
-          <span className="text-2xl">{darkMode ? '☀️' : '🌙'}</span>
+          <span className="text-2xl">{darkMode ? "☀️" : "🌙"}</span>
         </button>
       </div>
     </Router>
