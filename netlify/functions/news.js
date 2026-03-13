@@ -1,10 +1,10 @@
 // netlify/functions/news.js
 /* global process */
 const handler = async (event) => {
-  console.log('News function called');
+  console.log("News function called");
   // Handle preflight OPTIONS request for CORS
   if (event.httpMethod === "OPTIONS") {
-    console.log('Handling OPTIONS request');
+    console.log("Handling OPTIONS request");
     return {
       statusCode: 200,
       headers: {
@@ -17,24 +17,24 @@ const handler = async (event) => {
   }
 
   try {
-    console.log('Checking API key');
+    console.log("Checking API key");
     const apiKey = process.env.NEWS_API_KEY; // Note: No VITE_ prefix here—server-side env var
     if (!apiKey) {
-      console.log('API key not configured');
+      console.log("API key not configured");
       return {
         statusCode: 500,
         body: JSON.stringify({ error: "API key not configured" }),
       };
     }
-    console.log('API key found, fetching news');
+    console.log("API key found, fetching news");
 
     const response = await fetch(
       `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`,
     );
-    console.log('Fetch response status:', response.status);
+    console.log("Fetch response status:", response.status);
 
     if (!response.ok) {
-      console.log('NewsAPI error:', response.status, response.statusText);
+      console.log("NewsAPI error:", response.status, response.statusText);
       return {
         statusCode: response.status,
         body: JSON.stringify({
@@ -44,7 +44,7 @@ const handler = async (event) => {
     }
 
     const data = await response.json();
-    console.log('Fetched data successfully');
+    console.log("Fetched data successfully");
     return {
       statusCode: 200,
       headers: {
@@ -55,7 +55,7 @@ const handler = async (event) => {
       body: JSON.stringify(data),
     };
   } catch (error) {
-    console.log('Error in function:', error.message);
+    console.log("Error in function:", error.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
