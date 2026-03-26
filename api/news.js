@@ -15,6 +15,7 @@ export default async function handler(req, res) {
   try {
     console.log("Checking API key");
     const apiKey = process.env.NEWS_API_KEY; // Server-side env var
+    console.log("API Key exists:", !!apiKey);
     if (!apiKey) {
       console.log("API key not configured");
       res.status(500).json({ error: "API key not configured" });
@@ -26,6 +27,7 @@ export default async function handler(req, res) {
       `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`,
     );
     console.log("Fetch response status:", response.status);
+    console.log("Response headers:", Object.fromEntries(response.headers.entries()));
 
     if (!response.ok) {
       console.log("NewsAPI error:", response.status, response.statusText);
@@ -36,7 +38,7 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    console.log("Fetched data successfully");
+    console.log("Fetched data successfully, articles count:", data.articles?.length);
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
