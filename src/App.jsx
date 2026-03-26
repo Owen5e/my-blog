@@ -32,8 +32,8 @@ export default function App() {
             `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`,
           );
         } else {
-          // In production, use Netlify function
-          response = await fetch("/.netlify/functions/news");
+          // In production, use serverless function
+          response = await fetch("/api/news");
         }
         if (!response.ok) {
           throw new Error(
