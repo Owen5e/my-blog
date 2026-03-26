@@ -24,7 +24,17 @@ export default function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("/.netlify/functions/news");
+        let response;
+        if (import.meta.env.DEV) {
+          // In development, fetch directly from NewsAPI
+          const apiKey = import.meta.env.VITE_NEWS_API_KEY;
+          response = await fetch(
+            `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`,
+          );
+        } else {
+          // In production, use Netlify function
+          response = await fetch("/.netlify/functions/news");
+        }
         if (!response.ok) {
           throw new Error(
             `Failed to fetch news: ${response.status} ${response.statusText}`,
